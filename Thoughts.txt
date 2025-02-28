@@ -1,0 +1,32 @@
+Data we want to show
+
+-Introducton
+-Aim
+-Total Money given away
+
+-Number frequency and pattern
+    -Most count or most repeated numbers
+    -Most repeated series
+    -Least and never repeated numbers
+-Places
+    -winning Places
+    -Pattern of winning places if any
+    -Least winning places
+-Number and their pattern
+    -All time 
+    -Year wise
+    -digit wise distribution
+    -repetation and grouping of digits
+-For each lottery
+    -places to win the most of that
+    -number distribution 
+    -best number and worst numbers
+    -any patterns in numbers
+-For each amount
+    -number distribution
+    -places to win
+    -most repeated number
+-For each time period
+    -place with most wins
+    -numbers repeated and the distribution of numbers
+
