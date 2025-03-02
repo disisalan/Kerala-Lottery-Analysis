@@ -2,7 +2,6 @@ Data we want to show
 
 -Introducton
 -Aim
--Total Money given away
 
 -Number frequency and pattern
     -Most count or most repeated numbers
