@@ -38,21 +38,21 @@ common_numbers = common_numbers.sort_values("Frequency", ascending=False)
 st.write("**Top 10 Most Common 7-Digit Numbers with Amounts:**")
 st.dataframe(common_numbers.head(10))
 
-# Create interactive bar chart using Plotly
-top10 = common_numbers.head(10)
-fig_big = px.bar(
-    top10, 
-    x="Winning Number", 
-    y="Frequency", 
-    title="Top 10 Most Common 7-Digit Numbers",
-    labels={"Winning Number": "Winning Number", "Frequency": "Frequency"},
-    text="Frequency",
-    color="Frequency",
-    color_continuous_scale="Blues"
-)
+# # Create interactive bar chart using Plotly
+# top10 = common_numbers.head(10)
+# fig_big = px.bar(
+#     top10, 
+#     x="Winning Number", 
+#     y="Frequency", 
+#     title="Top 10 Most Common 7-Digit Numbers",
+#     labels={"Winning Number": "Winning Number", "Frequency": "Frequency"},
+#     text="Frequency",
+#     color="Frequency",
+#     color_continuous_scale="Blues"
+# )
 
-fig_big.update_layout(xaxis_tickangle=-45)  # Rotate x-axis labels
-st.plotly_chart(fig_big)
+# fig_big.update_layout(xaxis_tickangle=-45)  # Rotate x-axis labels
+# st.plotly_chart(fig_big)
 
 
 # ================================
@@ -83,21 +83,21 @@ with col4:
     st.write("**Bottom 25 of Top 50 4-Digit Numbers:**")
     st.dataframe(right_table, width=500)
 
-# Use Plotly for an interactive bar chart
-top20 = common_numbers_small.head(20)
-fig_small = px.bar(
-    top20, 
-    x="Winning Number", 
-    y="Frequency", 
-    title="Top 20 Most Common 4-Digit Numbers",
-    labels={"Winning Number": "Winning Number", "Frequency": "Frequency"},
-    text="Frequency",
-    color="Frequency",
-    color_continuous_scale="Blues"
-)
+# # Use Plotly for an interactive bar chart
+# top20 = common_numbers_small.head(20)
+# fig_small = px.bar(
+#     top20, 
+#     x="Winning Number", 
+#     y="Frequency", 
+#     title="Top 20 Most Common 4-Digit Numbers",
+#     labels={"Winning Number": "Winning Number", "Frequency": "Frequency"},
+#     text="Frequency",
+#     color="Frequency",
+#     color_continuous_scale="Blues"
+# )
 
-fig_small.update_layout(xaxis_tickangle=-45)  # Rotate x-axis labels
-st.plotly_chart(fig_small)
+# fig_small.update_layout(xaxis_tickangle=-45)  # Rotate x-axis labels
+# st.plotly_chart(fig_small)
 
 ##################################################################################################
 
