@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import itertools
 
 st.title("Time Frame Based Analysis")
@@ -54,16 +56,21 @@ for num in bigwins_tf["WinningNumber"]:
 st.write("**Digit Frequency Distribution (Big Wins)**")
 st.dataframe(freq_big_tf)
 
-# Plot frequency per position
-fig_big_tf, axs_big_tf = plt.subplots(2, 3, figsize=(18, 10))
-axs_big_tf = axs_big_tf.flatten()
-for idx, pos in enumerate(freq_big_tf.columns):
-    axs_big_tf[idx].bar(freq_big_tf.index, freq_big_tf[pos], color="dodgerblue")
-    axs_big_tf[idx].set_title(f"Frequency at {pos}")
-    axs_big_tf[idx].set_xlabel("Digit")
-    axs_big_tf[idx].set_ylabel("Count")
-plt.tight_layout()
-st.pyplot(fig_big_tf)
+# Plot frequency per position using Plotly subplots (2 rows x 3 cols)
+fig_big_tf = make_subplots(rows=2, cols=3, subplot_titles=list(freq_big_tf.columns))
+for i, pos in enumerate(freq_big_tf.columns):
+    row = i // 3 + 1
+    col = i % 3 + 1
+    fig_big_tf.add_trace(
+        go.Bar(x=freq_big_tf.index, y=freq_big_tf[pos], marker_color="dodgerblue"),
+        row=row, col=col
+    )
+    fig_big_tf.update_xaxes(title_text="Digit", row=row, col=col)
+    fig_big_tf.update_yaxes(title_text="Count", row=row, col=col)
+
+fig_big_tf.update_layout(title_text="Digit Frequency by Position (Big Wins)", 
+                         margin=dict(l=20, r=20, t=50, b=20))
+st.plotly_chart(fig_big_tf, use_container_width=True)
 
 # 2. Most probable combination: select the digit with the highest frequency at each position
 most_probable_big = "".join([freq_big_tf[col].idxmax() for col in freq_big_tf.columns])
@@ -76,17 +83,23 @@ if not matching_most_prob_big.empty:
 else:
     st.write("The most probable combination has not won in Big Wins for this time frame.")
 
-# 3. Top 10 winning locations for this time frame (Bar Chart Only)
+# 3. Top 10 winning locations for this time frame (Bar Chart)
 location_counts = bigwins_tf["Place"].value_counts().reset_index()
 location_counts.columns = ["Place", "Win Count"]
 top10_locations = location_counts.head(10)
-fig_loc, ax_loc = plt.subplots(figsize=(10, 6))
-ax_loc.barh(top10_locations["Place"], top10_locations["Win Count"], color="mediumslateblue")
-ax_loc.set_xlabel("Win Count")
-ax_loc.set_ylabel("Place")
-ax_loc.set_title("Top 10 Winning Locations (Big Wins)")
-ax_loc.invert_yaxis()
-st.pyplot(fig_loc)
+fig_loc = px.bar(
+    top10_locations,
+    x="Win Count",
+    y="Place",
+    orientation="h",
+    color="Win Count",
+    color_continuous_scale=px.colors.sequential.Plasma,
+    title="Top 10 Winning Locations (Big Wins)"
+)
+fig_loc.update_layout(yaxis={'categoryorder': 'total ascending'},
+                      xaxis_title="Win Count", yaxis_title="Place",
+                      margin=dict(l=20, r=20, t=50, b=20))
+st.plotly_chart(fig_loc, use_container_width=True)
 
 # 4. Most frequent winning number and its details
 winning_number_stats = bigwins_tf.groupby("WinningNumber").agg(
@@ -121,23 +134,25 @@ for num in smallwins_tf["WinningNumber"]:
 st.write("**Digit Frequency Distribution (Small Wins)**")
 st.dataframe(freq_small_tf)
 
-# Plot frequency per position for small wins
-fig_small_tf, axs_small_tf = plt.subplots(1, 4, figsize=(20, 5))
-for idx, pos in enumerate(freq_small_tf.columns):
-    axs_small_tf[idx].bar(freq_small_tf.index, freq_small_tf[pos], color="coral")
-    axs_small_tf[idx].set_title(f"Frequency at {pos}")
-    axs_small_tf[idx].set_xlabel("Digit")
-    axs_small_tf[idx].set_ylabel("Count")
-st.pyplot(fig_small_tf)
+# Plot frequency per position for small wins using Plotly subplots (1 row x 4 cols)
+fig_small_tf = make_subplots(rows=1, cols=4, subplot_titles=list(freq_small_tf.columns))
+for i, pos in enumerate(freq_small_tf.columns):
+    fig_small_tf.add_trace(
+        go.Bar(x=freq_small_tf.index, y=freq_small_tf[pos], marker_color="coral"),
+        row=1, col=i+1
+    )
+    fig_small_tf.update_xaxes(title_text="Digit", row=1, col=i+1)
+    fig_small_tf.update_yaxes(title_text="Count", row=1, col=i+1)
+fig_small_tf.update_layout(title_text="Digit Frequency by Position (Small Wins)",
+                           margin=dict(l=20, r=20, t=50, b=20))
+st.plotly_chart(fig_small_tf, use_container_width=True)
 
 # 3. Predicted Combinations Check for Small Wins (16 combinations)
-# Use the top 2 digits for each position
 likely_digits_small_tf = []
 for pos in freq_small_tf.columns:
     top_two_small = freq_small_tf[pos].nlargest(2).index.tolist()
     likely_digits_small_tf.append(top_two_small)
 predicted_combinations_small_tf = [''.join(comb) for comb in itertools.product(*likely_digits_small_tf)]
-# Display predicted combinations as little green text separated by commas
 predicted_small_str_tf = ", ".join(predicted_combinations_small_tf)
 st.write("**Predicted 4-Digit Combinations (16 total) for Small Wins:**")
 st.markdown(f'<p style="color: green;">{predicted_small_str_tf}</p>', unsafe_allow_html=True)
