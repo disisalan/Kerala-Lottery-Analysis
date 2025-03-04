@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import itertools
 
 st.title("Scheme Wise Analysis: Big Wins & Small Wins")
@@ -34,6 +36,7 @@ st.header(f"Big Wins Analysis for {selected_scheme_name}")
 
 # 1. Frequency of digits at each position (6-digit winning numbers)
 bigwins_scheme["WinningNumber"] = bigwins_scheme["Number"].astype(str).str.zfill(6)
+# Create a DataFrame to store digit frequencies for positions 1 to 6
 freq_big = pd.DataFrame(0, index=[str(d) for d in range(10)],
                         columns=[f"Position {i}" for i in range(1, 7)])
 for num in bigwins_scheme["WinningNumber"]:
@@ -43,15 +46,20 @@ for num in bigwins_scheme["WinningNumber"]:
 st.subheader("Digit Frequency Distribution in Winning Numbers (Big Wins)")
 st.dataframe(freq_big)
 
-fig_big, axs_big = plt.subplots(2, 3, figsize=(18, 10))
-axs_big = axs_big.flatten()
-for idx, pos in enumerate(freq_big.columns):
-    axs_big[idx].bar(freq_big.index, freq_big[pos], color="dodgerblue")
-    axs_big[idx].set_title(f"Frequency at {pos}")
-    axs_big[idx].set_xlabel("Digit")
-    axs_big[idx].set_ylabel("Count")
-plt.tight_layout()
-st.pyplot(fig_big)
+# Create subplots for each of the 6 digit positions using Plotly
+fig_big = make_subplots(rows=2, cols=3, subplot_titles=list(freq_big.columns))
+positions = list(freq_big.columns)
+for i, pos in enumerate(positions):
+    row = i // 3 + 1
+    col = i % 3 + 1
+    fig_big.add_trace(
+        go.Bar(x=freq_big.index, y=freq_big[pos], marker_color="dodgerblue"),
+        row=row, col=col
+    )
+    fig_big.update_xaxes(title_text="Digit", row=row, col=col)
+    fig_big.update_yaxes(title_text="Count", row=row, col=col)
+fig_big.update_layout(title_text="Digit Frequency by Position (Big Wins)", height=600, width=900)
+st.plotly_chart(fig_big, use_container_width=True)
 
 # 2. Top 10 winning locations for this scheme
 top_locations_big = bigwins_scheme["Place"].value_counts().reset_index()
@@ -59,19 +67,26 @@ top_locations_big.columns = ["Place", "Win Count"]
 
 st.subheader("Top 10 Winning Locations (Big Wins)")
 st.dataframe(top_locations_big.head(10))
-fig_loc_big, ax_loc_big = plt.subplots(figsize=(10, 6))
-ax_loc_big.barh(top_locations_big["Place"].head(10), top_locations_big["Win Count"].head(10), color="mediumslateblue")
-ax_loc_big.set_xlabel("Win Count")
-ax_loc_big.set_ylabel("Place")
-ax_loc_big.set_title("Top 10 Winning Locations in Big Wins")
-ax_loc_big.invert_yaxis()
-st.pyplot(fig_loc_big)
+
+# Horizontal bar chart for top 10 winning locations using Plotly Express
+fig_loc_big = px.bar(
+    top_locations_big.head(10),
+    x="Win Count",
+    y="Place",
+    orientation="h",
+    color="Win Count",
+    color_continuous_scale=px.colors.sequential.Plasma,
+    title="Top 10 Winning Locations in Big Wins"
+)
+fig_loc_big.update_layout(yaxis={'categoryorder': 'total ascending'},
+                          xaxis_title="Win Count", yaxis_title="Place")
+st.plotly_chart(fig_loc_big, use_container_width=True)
 
 # 3. Predicted Combinations Check for Big Wins (64 combinations)
 st.subheader("Predicted Combinations Check (Big Wins)")
 st.write("Based on the digit frequency distribution above, the top 2 digits for each of the 6 positions are selected to predict 64 possible combinations.")
 
-# Get the top 2 digits for each position
+# Get the top 2 digits for each position and display them
 likely_digits_big = []
 for pos in freq_big.columns:
     top_two = freq_big[pos].nlargest(2).index.tolist()
@@ -80,11 +95,10 @@ for pos in freq_big.columns:
 
 # Generate all possible combinations (2^6 = 64)
 predicted_combinations_big = [''.join(comb) for comb in itertools.product(*likely_digits_big)]
-# Show predicted numbers as little green text separated by commas
 predicted_big_str = ", ".join(predicted_combinations_big)
 st.markdown(f'<p style="color: green;">{predicted_big_str}</p>', unsafe_allow_html=True)
 
-# Check which of these predicted combinations have won
+# Check which of these predicted combinations have won in Big Wins
 winning_matches_big = bigwins_scheme[bigwins_scheme["WinningNumber"].isin(predicted_combinations_big)]
 st.subheader("Matching Winning Entries (Big Wins)")
 if not winning_matches_big.empty:
@@ -118,13 +132,17 @@ for num in smallwins_scheme["WinningNumber"]:
 st.subheader("Digit Frequency Distribution in Winning Numbers (Small Wins)")
 st.dataframe(freq_small)
 
-fig_small, axs_small = plt.subplots(1, 4, figsize=(20, 5))
-for idx, pos in enumerate(freq_small.columns):
-    axs_small[idx].bar(freq_small.index, freq_small[pos], color="coral")
-    axs_small[idx].set_title(f"Frequency at {pos}")
-    axs_small[idx].set_xlabel("Digit")
-    axs_small[idx].set_ylabel("Count")
-st.pyplot(fig_small)
+# Create subplots for 4-digit positions using Plotly
+fig_small = make_subplots(rows=1, cols=4, subplot_titles=list(freq_small.columns))
+for i, pos in enumerate(freq_small.columns):
+    fig_small.add_trace(
+        go.Bar(x=freq_small.index, y=freq_small[pos], marker_color="coral"),
+        row=1, col=i+1
+    )
+    fig_small.update_xaxes(title_text="Digit", row=1, col=i+1)
+    fig_small.update_yaxes(title_text="Count", row=1, col=i+1)
+fig_small.update_layout(title_text="Digit Frequency by Position (Small Wins)", height=400, width=1000)
+st.plotly_chart(fig_small, use_container_width=True)
 
 # 3. Predicted Combinations Check for Small Wins (16 combinations)
 st.subheader("Predicted Combinations Check (Small Wins)")
@@ -137,13 +155,11 @@ for pos in freq_small.columns:
     likely_digits_small.append(top_two_small)
 
 predicted_combinations_small = [''.join(comb) for comb in itertools.product(*likely_digits_small)]
-# Show predicted numbers as little green text separated by commas
 predicted_small_str = ", ".join(predicted_combinations_small)
 st.markdown(f'<p style="color: green;">{predicted_small_str}</p>', unsafe_allow_html=True)
 
-# Check which predicted combinations appear in Small Wins and calculate win count and total amount won
+# Check which predicted combinations appear in Small Wins and calculate win count and total amount
 matching_entries = smallwins_scheme[smallwins_scheme["WinningNumber"].isin(predicted_combinations_small)]
-
 st.subheader("Predicted Combinations Win Count and Total Amount (Small Wins)")
 if not matching_entries.empty:
     df_matching_small = matching_entries.groupby("WinningNumber").agg(
