@@ -63,9 +63,23 @@ df_small = pd.read_csv("Assets/Csvfiles/SmallWins.csv")
 st.write("### Small Wins Analysis")
 
 # Ensure the winning number is a 4-digit string by zero-padding the 'Number' column if necessary.
+# Ensure the winning number is a 4-digit string
 df_small["winning_number"] = df_small["Number"].apply(lambda x: str(x).zfill(4))
 
-# Calculate the frequency of each winning number
+# Calculate the frequency and total amount won for each winning number
+winning_stats_small = df_small.groupby("winning_number").agg(
+    Frequency=("winning_number", "count"),
+    Total_Amount=("Amount", "sum")
+).reset_index().rename(columns={"winning_number": "Winning Number"})
+
+# Sort by frequency in descending order and select the top 15
+top15_numbers = winning_stats_small.sort_values("Frequency", ascending=False).head(15)
+
+# Display the top 15 winning numbers with total amount won
+st.write("**Top 15 Winning Numbers with Total Amount Won:**")
+st.dataframe(top15_numbers)
+
+# Calculate the frequency of each winning number (for top 50 split)
 common_numbers_small = df_small["winning_number"].value_counts().reset_index()
 common_numbers_small.columns = ["Winning Number", "Frequency"]
 
@@ -83,20 +97,29 @@ with col4:
     st.write("**Bottom 25 of Top 50 4-Digit Numbers:**")
     st.dataframe(right_table, width=500)
 
-# # Use Plotly for an interactive bar chart
-# top20 = common_numbers_small.head(20)
-# fig_small = px.bar(
-#     top20, 
-#     x="Winning Number", 
-#     y="Frequency", 
-#     title="Top 20 Most Common 4-Digit Numbers",
-#     labels={"Winning Number": "Winning Number", "Frequency": "Frequency"},
-#     text="Frequency",
-#     color="Frequency",
-#     color_continuous_scale="Blues"
-# )
+# Calculate totals for pie chart: total frequency for top 50 numbers and for all numbers
+top50_total = common_numbers_small_top50["Frequency"].sum()
+all_total = common_numbers_small["Frequency"].sum()
+others_total = all_total - top50_total
 
-# fig_small.update_layout(xaxis_tickangle=-45)  # Rotate x-axis labels
+# Create a DataFrame for the pie chart data
+pie_data = pd.DataFrame({
+    "Category": ["Top 50 Winning Numbers", "Others"],
+    "Frequency": [top50_total, others_total]
+})
+
+# Use Plotly to create an interactive pie chart
+import plotly.express as px
+fig = px.pie(
+    pie_data,
+    names="Category",
+    values="Frequency",
+    title="Percentage of Top 50 Winning Numbers vs. Others",
+    color_discrete_sequence=["skyblue", "lightgrey"],
+    hole=0.3  # optional: creates a donut chart effect
+)
+st.plotly_chart(fig)
+
 # st.plotly_chart(fig_small)
 
 ##################################################################################################
