@@ -6,7 +6,10 @@ from plotly.subplots import make_subplots
 import itertools
 
 st.title("Time Frame Based Analysis")
+st.markdown("""
+In this section, we analyze lottery trends based on specific time periods. Select one of the following time frames to view detailed trends and patterns in both Big Wins and Small Wins:
 
+""")
 # Time frame options
 time_frames = ["2020-2021", "2022", "2023", "2024-25"]
 selected_time_frame = st.radio("Select a Time Frame:", time_frames)
@@ -36,12 +39,12 @@ def filter_time_frame(df, col="Date_dt", tf=selected_time_frame):
 bigwins_tf = filter_time_frame(bigwins_df)
 smallwins_tf = filter_time_frame(smallwins_df)
 
-st.header(f"Time Frame: {selected_time_frame}")
+st.write(f"## Time Frame: {selected_time_frame}")
 
 ######################################
 # Big Wins Analysis for Selected Time Frame
 ######################################
-st.subheader("Big Wins Analysis")
+st.write("#### Big Wins Analysis")
 
 # Create a 6-digit WinningNumber column
 bigwins_tf["WinningNumber"] = bigwins_tf["Number"].astype(str).str.zfill(6)
@@ -112,7 +115,7 @@ st.dataframe(winning_number_stats.head(10))
 ######################################
 # Small Wins Analysis for Selected Time Frame
 ######################################
-st.subheader("Small Wins Analysis")
+st.write("#### Small Wins Analysis")
 
 # Create a 4-digit WinningNumber column
 smallwins_tf["WinningNumber"] = smallwins_tf["Number"].astype(str).str.zfill(4)
@@ -123,7 +126,7 @@ small_number_stats = smallwins_tf.groupby("WinningNumber").agg(
     Total_Amount=("Amount", "sum")
 ).reset_index().sort_values("Win_Count", ascending=False)
 st.write("**Top 20 Winning Numbers (Small Wins):**")
-st.dataframe(small_number_stats.head(20))
+st.dataframe(small_number_stats.head(20),width=500)
 
 # 2. Frequency of digits for each of the 4 positions
 freq_small_tf = pd.DataFrame(0, index=[str(d) for d in range(10)],
@@ -164,7 +167,7 @@ if not matching_combinations_small_tf.empty:
          Total_Amount=("Amount", "sum")
     ).reset_index().rename(columns={"WinningNumber": "Predicted Combination"})
     st.write("**Predicted Combinations Win Count and Total Amount (Small Wins):**")
-    st.dataframe(df_matching_small_tf)
+    st.dataframe(df_matching_small_tf,width=500)
 else:
     st.write("None of the predicted 16 combinations have won in Small Wins.")
 

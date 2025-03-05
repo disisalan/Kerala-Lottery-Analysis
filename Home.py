@@ -8,61 +8,48 @@ st.title("Kerala Lottery Data Analysis")
 
 
 
-st.header("Introduction")
+st.header("Inspiration")
 st.write("""
 Lotteries have fascinated people for decades, offering a mix of luck and probability. 
 During my recent visit to Kerala, I noticed how people approached buying lottery tickets. 
 Many believed that numbers with repeating digits were less likely to win, despite the fact that all numbers should have an equal probability of being drawn. 
+""")
+st.header("Aim")
 
+st.write("""
 This observation sparked my curiosity. I wanted to analyze historical lottery data to see if there were any patterns, biases, or trends in the results.
-
-To investigate this, I scraped over **1,000 PDFs** from official Kerala government sources, compiling a dataset of more than **400,000 entries**. 
-The goal of this project is to analyze whether certain numbers are drawn more or less frequently than expected, as well as explore trends related to prize distribution, locations, and winning amounts.
+The goal of this project is to analyze whether certain numbers are drawn more or less frequently than expected, as well as explore **trends related to prize distribution, locations, and winning amounts.**
 """)
 
-st.header("Understanding the Kerala State Lottery System")
-st.write("""
-The Kerala State Lottery system is run by the state government and operates different lottery schemes on specific days of the week. 
-Each lottery follows a structured format, with tickets sold under different series, and winners are selected through a random draw.
 
-Prizes are categorized based on matching either the full ticket number and series or just a portion of the ticket number. These categories include:
 
-- **Big Wins** – To win, the ticket's full 6-digit number and series must match exactly. This category includes the first, second, and third prize winners.
-- **Small Wins** – Only the last four digits of the ticket number need to match the drawn number, making this category more accessible to a larger number of winners.
+st.subheader("Understanding Kerala Lotteries")
 
-The lottery system is designed to be random, ensuring fairness in the selection process. However, public perception and buying habits suggest that not all numbers are considered equally desirable by players.
-""")
+st.markdown("""
+Kerala, often called "God's Own Country," launched its government-run paper lottery system in 1967. Conceived to generate revenue and support the needy, the first lottery ticket was issued in January 1968. Today, Kerala State Lotteries are known for their transparency and reliability.
 
-st.header("Data Collection and Structure")
-st.write("""
-To conduct this analysis, I scraped historical lottery results directly from official government PDFs, which are publicly available. 
-After processing the data, I created two structured datasets:
-""")
+For the top three prizes, you must match both the serial and the full winning number. Prizes from fourth to eighth are won by matching only the last four digits.
+""", unsafe_allow_html=True)
 
-st.subheader("1. Big Wins Dataset")
-st.write("""
-This dataset includes information about the top prize winners where the entire ticket number and series must match to win.
+st.markdown("---")
 
-**Columns:**
-- **Date** – The date of the lottery draw
-- **Series** – The ticket series identifier
-- **Number** – The full 6-digit winning number
-- **Amount** – The prize amount for that entry
-- **Location** – The place where the ticket was sold
-- **SN (Serial + Number)** – A combined field of the ticket's serial and number
-""")
+# Weekly Lotteries Section
+st.subheader("📅 Weekly Lotteries")
+st.markdown("""
+<div style="font-size: 16px;">
+Kerala holds a lottery draw <span style="font-weight: bold;">every day</span> at <span style="font-weight: bold;">3:00 PM</span> in Thiruvananthapuram. Each day features a different lottery with its own ticket price and first prize:
+</div>
+""", unsafe_allow_html=True)
 
-st.subheader("2. Small Wins Dataset")
-st.write("""
-This dataset records winners where only the last four digits of the ticket number need to match.
+st.markdown("""
+- <strong>Monday (Win Win):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 75,00,000</strong>  
+- <strong>Tuesday (Sthree Shakthi):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 75,00,000</strong> 
+- <strong>Wednesday (Fifty Fifty):</strong> Ticket <strong>Rs 50</strong>; First Prize <strong>Rs 1,00,00,000</strong>  
+- <strong>Thursday (Karunya Plus):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 80,00,000</strong> 
+- <strong>Friday (Nirmal):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 70,00,000</strong> 
+- <strong>Saturday (Karunya):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 80,00,000</strong>  
+- <strong>Sunday (Akshaya):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 70,00,000</strong> 
+""", unsafe_allow_html=True)
 
-**Columns:**
-- **Date** – The date of the lottery draw
-- **Series** – The ticket series identifier
-- **Number** – The last four digits of the winning number
-- **Amount** – The prize amount for that entry
-
-By analyzing these datasets, I aim to uncover whether certain number patterns occur more frequently, how prize distribution varies across locations, and whether there are any unexpected irregularities in the draws.
-""")
 
 

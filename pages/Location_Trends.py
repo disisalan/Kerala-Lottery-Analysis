@@ -14,11 +14,14 @@ bigwins_df = pd.read_csv("Assets/Csvfiles/BigWins_final.csv")
 ########################################
 # Most Winning Places
 ########################################
-st.header("Most Winning Places")
-st.write(
-    "This section displays the top 10 locations that have won the most big prizes, along with the complete list of all locations and their respective number of wins."
-)
+st.title("Location Trends")
 
+st.write("## 1. Most Winning Places")
+st.markdown("""
+This section displays the top 10 locations that have won the most big prizes, along with the complete list of all locations and their respective number of wins.
+- **Top 10 Locations with Most Wins**
+- **Complete List of Locations and Their Win Counts**
+""")
 # Calculate the win count per location
 win_counts = bigwins_df["Place"].value_counts().reset_index()
 win_counts.columns = ["Place", "Win Count"]
@@ -27,7 +30,7 @@ win_counts.columns = ["Place", "Win Count"]
 top_10 = win_counts.head(10)
 
 st.subheader("Top 10 Locations with Most Wins")
-st.dataframe(top_10)
+st.dataframe(top_10,width=500)
 
 # Create a horizontal bar chart for the top 10 using Plotly Express
 fig_top10 = px.bar(
@@ -44,17 +47,29 @@ fig_top10.update_layout(yaxis={'categoryorder': 'total ascending'},
                         yaxis_title="Location")
 st.plotly_chart(fig_top10, use_container_width=True)
 
-st.subheader("Complete List of Locations and Their Win Counts")
-st.dataframe(win_counts)
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Most Winning Places]'
+    '</div>', unsafe_allow_html=True)
 
+st.write("### Complete List of Locations and Their Win Counts")
+st.dataframe(win_counts,width=500)
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Most Winning Places]'
+    '</div>', unsafe_allow_html=True)
 ########################################
 # Least Winning Locations
 ########################################
-st.header("Least Winning Locations")
+st.write("## 2. Least Winning Locations")
 st.write(
     "This section displays the locations with the fewest wins along with the maximum winning amount they received and the total win count."
 )
 
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Least Winning Places]'
+    '</div>', unsafe_allow_html=True)
 # Group data by Place to compute win count and max win amount for each location
 least_wins = bigwins_df.groupby("Place").agg({
     "Amount": "max",
@@ -85,11 +100,14 @@ st.plotly_chart(fig_bottom10, use_container_width=True)
 ########################################
 # Dynamic Results for a Specific Place
 ########################################
-st.header("Dynamic Results for a Specific Place")
+st.write("## 3. Dynamic Results for a Specific Place")
 st.write(
     "Enter a location to see its total wins and the frequency distribution of each digit (0-9) for each of the 6-digit winning numbers from the big wins dataset. By default, data for Ernakulam is shown."
 )
-
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '</div>', unsafe_allow_html=True)
 # Text input for place with default value "Ernakulam"
 place_input = st.text_input("Enter a Place (e.g., THRISSUR):", value="Ernakulam")
 
@@ -113,10 +131,18 @@ for num in filtered["WinningNumber"]:
         col = f"Position {i+1}"
         digit_freq.loc[digit, col] += 1
 
-st.subheader("Digit Frequency Distribution Table for Each Position (Big Wins)")
+st.write("#### Digit Frequency Distribution Table for Each Position (Big Wins)")
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '</div>', unsafe_allow_html=True)
 st.dataframe(digit_freq)
 
 st.subheader("Digit Frequency Distribution Bar Charts by Position")
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '</div>', unsafe_allow_html=True)
 # Create subplots for all 6 positions using Plotly
 fig_subplots = make_subplots(rows=2, cols=3, subplot_titles=digit_freq.columns)
 positions = list(digit_freq.columns)
@@ -143,7 +169,10 @@ st.subheader("Most Likely 6-Digit Combinations")
 st.write(
     "For each of the 6 positions in the winning number, we select the top 2 most frequent digits. Based on these, the following predicted combinations are generated:"
 )
-
+st.markdown(
+    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
+    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '</div>', unsafe_allow_html=True)
 # For each position, get the top 2 digits by frequency and display them.
 likely_digits = []
 for pos in digit_freq.columns:

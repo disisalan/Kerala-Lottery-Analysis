@@ -5,7 +5,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import itertools
 
-st.title("Dynamic Amount Based Analysis")
+st.title("Amount Based Analysis")
+st.markdown("""
+In this section, we analyze the prize amounts across the lottery data. We examine the distribution of winning amounts, identify trends in prize values, and compare these amounts across different schemes and time frames. This analysis helps to uncover insights about the monetary scale of wins and any anomalies in the prize distributions.
+""")
 
 # Unique prices as given
 unique_prices = [100, 200, 500, 1000, 2000, 5000, 100000, 500000, 1000000, 7000000, 7500000, 8000000, 10000000]
@@ -17,7 +20,7 @@ smallwins_df = pd.read_csv("Assets/Csvfiles/SmallWins.csv")
 
 # For amounts up to 5000 use Small Wins analysis; otherwise use Big Wins
 if selected_amount <= 5000:
-    st.header(f"Small Wins Analysis for Amount: {selected_amount}")
+    st.write(f"## Small Wins Analysis for Amount: {selected_amount}")
     # Filter the small wins data by the selected amount
     df = smallwins_df[smallwins_df["Amount"] == selected_amount].copy()
     
@@ -34,14 +37,18 @@ if selected_amount <= 5000:
         list1 = top_50.head(25)
         list2 = top_50.tail(25)
         
-        st.subheader("Top 50 Winning Numbers and Their Frequencies")
+        st.write("#### Top 50 Winning Numbers and Their Frequencies")
+        st.markdown("""
+            In this section, we analyze the Small Wins dataset to identify the top 50 winning numbers based on their frequency of occurrence. The numbers are ranked in descending order, providing a clear overview of which numbers are drawn most frequently.
+            """)
+
         col1, col2 = st.columns(2)
         with col1:
             st.write("List 1 (Top 25):")
-            st.dataframe(list1)
+            st.dataframe(list1,width=400)
         with col2:
             st.write("List 2 (Next 25):")
-            st.dataframe(list2)
+            st.dataframe(list2,width=400)
         
         # --- Digit-wise Analysis for Small Wins ---
         # Ensure winning numbers are 4-digit strings (pad with zeros if necessary)
@@ -54,7 +61,11 @@ if selected_amount <= 5000:
             for i, digit in enumerate(num):
                 digit_freq.loc[digit, f"Position {i+1}"] += 1
         
-        st.subheader("Digit Frequency Distribution (Small Wins)")
+        st.write("#### Digit Frequency Distribution (Small Wins)")
+        st.markdown("""
+            In this section, we analyze the distribution of digits in the 4-digit winning numbers from the Small Wins dataset. By breaking down the frequency of each digit (0-9) at each position, we can uncover hidden patterns and potential biases in the lottery draws.
+            """)
+
         st.dataframe(digit_freq)
         
         # Display the most frequent digit for each position
@@ -77,7 +88,7 @@ if selected_amount <= 5000:
         st.plotly_chart(fig_small, use_container_width=True)
 
 else:
-    st.header(f"Big Wins Analysis for Amount: {selected_amount}")
+    st.write(f"## Big Wins Analysis for Amount: {selected_amount}")
     # Filter the big wins data by the selected amount
     df = bigwins_df[bigwins_df["Amount"] == selected_amount].copy()
     
@@ -89,6 +100,9 @@ else:
         freq.columns = ["Number", "Frequency"]
         top_10 = freq.head(10)
         st.subheader("Top 10 Winning Numbers and Their Frequencies")
+        st.markdown("""
+            In this section, we analyze the Big Wins dataset to identify the top 10 winning numbers based on their frequency of occurrence. The numbers are ranked in descending order, providing a clear overview of which numbers are drawn most frequently.
+            """)
         st.dataframe(top_10)
         
         # --- Digit-wise Analysis for Big Wins ---
@@ -103,6 +117,10 @@ else:
                 digit_freq.loc[digit, f"Position {i+1}"] += 1
         
         st.subheader("Digit Frequency Distribution (Big Wins)")
+        st.markdown("""
+        In this section, we analyze the distribution of digits in the 6-digit winning numbers from the Big Wins dataset. By breaking down the frequency of each digit (0-9) at each position, we can uncover hidden patterns and potential biases in the lottery draws.
+        """)
+
         st.dataframe(digit_freq)
         
         # Display the most frequent digit for each position
@@ -148,7 +166,11 @@ else:
             st.write("None of the predicted combinations have won.")
         
         # --- Top 10 Locations to Win that Price ---
-        st.subheader("Top 10 Winning Locations (Big Wins)")
+        st.write("#### Top 10 Winning Locations (Big Wins)")
+        st.markdown("""
+This analysis identifies the top 10 locations that have won the most prizes in the Big Wins dataset. We calculate the win counts for each location and then rank them to highlight which areas have the highest frequency of wins.
+""")
+
         loc_counts = df["Place"].value_counts().reset_index()
         loc_counts.columns = ["Place", "Win Count"]
         top_locations = loc_counts.head(10)

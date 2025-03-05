@@ -9,14 +9,25 @@ import plotly.graph_objects as go
 st.title("Number Frequency and Patterns")
 
 st.markdown("""
-Explore our lottery dataset using three key columns:
-- **series**: The lottery series identifier (e.g., "AB")
-- **sn**: The complete winning entry (e.g., "AB 123456")
-- **numbers**: The 7-digit number part (e.g., "123456")
-""")
 
-st.header("Most Common Numbers")
-st.write("For Big Wins ")
+ In this section, we dive into the fascinating world of lottery number patterns. We focus on three key columns from our dataset:
+
+- **Series:** The lottery series identifier (e.g., "AB"), which helps differentiate various lottery schemes.
+- **SN:** The complete winning entry (e.g., "AB 123456"), combining the series with the winning number.
+- **Numbers:** The 7-digit number part (e.g., "123456"), which we analyze to uncover hidden trends.
+
+By examining these columns, we explore frequency distributions, recurring patterns, and anomalies in the lottery results to provide deeper insights into how these numbers behave over time.
+""", unsafe_allow_html=True)
+
+st.write("## 1. Most Common Numbers")
+st.markdown("""
+Identify the most frequently drawn 7-digit numbers by analyzing **all rows** from the `Number` column in the dataset.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
+st.write("#### For Big Wins ")
 
 df_big = pd.read_csv("Assets/Csvfiles/BigWins_final.csv")
 # Ensure the winning number is a 7-digit string by zero-padding the 'Number' column if necessary.
@@ -38,30 +49,16 @@ common_numbers = common_numbers.sort_values("Frequency", ascending=False)
 st.write("**Top 10 Most Common 7-Digit Numbers with Amounts:**")
 st.dataframe(common_numbers.head(10))
 
-# # Create interactive bar chart using Plotly
-# top10 = common_numbers.head(10)
-# fig_big = px.bar(
-#     top10, 
-#     x="Winning Number", 
-#     y="Frequency", 
-#     title="Top 10 Most Common 7-Digit Numbers",
-#     labels={"Winning Number": "Winning Number", "Frequency": "Frequency"},
-#     text="Frequency",
-#     color="Frequency",
-#     color_continuous_scale="Blues"
-# )
-
-# fig_big.update_layout(xaxis_tickangle=-45)  # Rotate x-axis labels
-# st.plotly_chart(fig_big)
-
-
-# ================================
-# Task 1: Most Common Winning Numbers (Small Wins)
-# ================================
 
 df_small = pd.read_csv("Assets/Csvfiles/SmallWins.csv")
-st.write("### Small Wins Analysis")
-
+st.write("#### For Small Wins")
+st.markdown("""
+Identify the most frequently drawn 4-digit numbers by analyzing **all rows** from the `Number` column in the dataset.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 # Ensure the winning number is a 4-digit string by zero-padding the 'Number' column if necessary.
 # Ensure the winning number is a 4-digit string
 df_small["winning_number"] = df_small["Number"].apply(lambda x: str(x).zfill(4))
@@ -77,7 +74,7 @@ top15_numbers = winning_stats_small.sort_values("Frequency", ascending=False).he
 
 # Display the top 15 winning numbers with total amount won
 st.write("**Top 15 Winning Numbers with Total Amount Won:**")
-st.dataframe(top15_numbers)
+st.dataframe(top15_numbers,width=500)
 
 # Calculate the frequency of each winning number (for top 50 split)
 common_numbers_small = df_small["winning_number"].value_counts().reset_index()
@@ -119,13 +116,23 @@ fig = px.pie(
     hole=0.3  # optional: creates a donut chart effect
 )
 st.plotly_chart(fig)
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 
 # st.plotly_chart(fig_small)
 
 ##################################################################################################
 
-st.header("Most Common Lottery Series")
-st.write("Analyze which lottery series appear most frequently in the dataset.")
+st.write("## 2. Most Common Lottery Series")
+st.markdown("""
+Analyze which lottery series (e.g., AA, AB, etc.) appear most frequently in the **Big Wins** dataset. This uses the `Series` column.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 
 # Calculate the frequency of each serial
 common_serial = df_big["Serial"].value_counts().reset_index()
@@ -171,14 +178,23 @@ st.plotly_chart(fig_serial)
 
 
 
-st.header("Least Common and Never Drawn Numbers")
-st.write("Discover numbers in **sn** and **numbers** that rarely or never appear.")
+st.write("## 3. Least Common and Never Drawn Numbers")
+st.markdown("""
+Determine which 7-digit and 4-digit numbers have been drawn the least or have never been drawn by performing a frequency count on the **Number** column.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 
 
 ##################################################################################################
 
-st.header("Repeating Digit Analysis")
-st.write("Check if numbers with repeating digits (e.g., 111111) occur less frequently.")
+st.write("## 4.Repeating Digit Analysis")
+st.markdown("""
+Investigate if numbers with repeating digits (e.g., 1111111, 2223222) are less common. This analysis filters the `Number` column for patterns with repeating digits.
+""")
+
 
 def max_digit_repeat(num_str):
     """Finds the maximum number of times any digit is repeated in a number."""
@@ -200,7 +216,10 @@ fig_big_pie = px.pie(
     color_discrete_sequence=['#ff9999', '#66b3ff']
 )
 st.plotly_chart(fig_big_pie)
-
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 # ✅ Breakdown of repeating digits in Big Wins
 big_repeat_groups = (
     df_big[df_big["is_repeating"]]
@@ -251,6 +270,12 @@ fig_small_pie = px.pie(
 )
 st.plotly_chart(fig_small_pie)
 
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
+
+
 # ✅ Breakdown of repeating digits in Small Wins
 small_repeat_groups = (
     df_small[df_small["is_repeating"]]
@@ -268,8 +293,14 @@ st.dataframe(small_repeat_groups)
 ##################################################################################################
 
 
-st.header("Digit Position Analysis")
-st.write("Examine the frequency of each digit in different positions within the **sn** entries.")
+st.markdown("## 5.Digit Position Analysis")
+st.markdown("""
+Examine the frequency of individual digits at each position in the 7-digit number. This analysis inspects each digit position separately using the **Number** column.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 
 ### Big Wins Analysis
 df_big["winning_number"] = df_big["Number"].astype(str).str.zfill(6)
@@ -319,7 +350,14 @@ digit_counts_small = {
 digit_counts_small_df = pd.DataFrame(digit_counts_small).T
 
 st.subheader("Digit Frequency at Each Position (Small Wins)")
-# Create 1 row with 4 columns
+st.markdown("""
+Examine the frequency of individual digits at each position in the 4-digit number. This analysis inspects each digit position separately using the **Number** column.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
+
 cols_small = st.columns(4)
 for pos in range(4):
     fig = px.bar(
@@ -346,7 +384,7 @@ big_wins_filtered = df_big[df_big["winning_number"] == most_likely_big]
 small_wins_filtered = df_small[df_small["winning_number"] == most_likely_small]
 
 # Display results for Big Wins
-st.header("Most Likely Winning Number in Big Wins")
+st.write("### Most Likely Winning Number in Big Wins")
 if not big_wins_filtered.empty:
     st.write(f"The most likely winning number `{most_likely_big}` won `{len(big_wins_filtered)}` times.")
     st.dataframe(big_wins_filtered[["Date", "Amount", "winning_number"]])
@@ -354,7 +392,7 @@ else:
     st.write(f"The number `{most_likely_big}` has never won.")
 
 # Display results for Small Wins
-st.header("Most Likely Winning Number in Small Wins")
+st.write("### Most Likely Winning Number in Small Wins")
 if not small_wins_filtered.empty:
     st.write(f"The most likely winning number `{most_likely_small}` won `{len(small_wins_filtered)}` times.")
     st.dataframe(small_wins_filtered[["Date", "Amount", "winning_number"]])
@@ -362,11 +400,14 @@ else:
     st.write(f"The number `{most_likely_small}` has never won.")
 ##################################################################################################
 
-st.header("Number Clustering")
-# ---------------------------
-# Big Wins Histogram
-# ---------------------------
-# Convert the "Date" column to datetime format (assuming format is "DD/MM/YYYY")
+st.markdown("### 6. Number Clustering")
+st.markdown("""
+Check if winning numbers are grouped within specific ranges (e.g., 1000000-2000000 vs. 8000000-9000000) by analyzing the entire range of the **Number** column.
+""")
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> [Write your insight here]'
+    '</div>', unsafe_allow_html=True)
 df_big["Date"] = pd.to_datetime(df_big["Date"], format="%d/%m/%Y")
 
 # Convert the "Number" column to integers
