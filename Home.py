@@ -5,8 +5,7 @@ import streamlit as st
 # App Title
 st.title("Kerala Lottery Data Analysis")
 
-
-
+st.image("Assets/Images/lottery_new_logo-copy.png")
 
 st.header("Inspiration")
 st.write("""
@@ -50,6 +49,14 @@ st.markdown("""
 - <strong>Saturday (Karunya):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 80,00,000</strong>  
 - <strong>Sunday (Akshaya):</strong> Ticket <strong>Rs 40</strong>; First Prize <strong>Rs 70,00,000</strong> 
 """, unsafe_allow_html=True)
+st.image("Assets/Images/winwin.jpg")
+st.image("Assets/Images/akshaya1.jpg")
+st.write("")
+st.image("Assets/Images/karunya.jpg")
+st.image("Assets/Images/karunya-plus.jpg")
+st.image("Assets/Images/nirmal1.jpg")
+st.image("Assets/Images/sthreesakthi.jpg")
+st.image("Assets/Images/fifty-fifty.jpg")
 
 
 

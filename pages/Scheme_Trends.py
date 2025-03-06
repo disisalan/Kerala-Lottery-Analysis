@@ -38,7 +38,7 @@ For each lottery scheme, we calculate the frequency of digits in the winning num
 """)
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Scheme-wise Digit Frequency Distribution]'
+    '<strong>Insight:</strong> The digit frequency does not indicate a favourable probablity to any number or range of numbers.'
     '</div>', unsafe_allow_html=True)
 # 1. Frequency of digits at each position (6-digit winning numbers)
 bigwins_scheme["WinningNumber"] = bigwins_scheme["Number"].astype(str).str.zfill(6)
@@ -77,7 +77,7 @@ This analysis identifies the top 10 locations that have won the most prizes in t
 """)
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Top 10 Winning Locations (Big Wins)]'
+    '<strong>Insight:</strong> This is again highly correspondes to the sales of tickets in these areas but since no data is available , no concrete statement can be made.'
     '</div><br> ', unsafe_allow_html=True)
 st.dataframe(top_locations_big.head(10))
 
@@ -141,7 +141,7 @@ In this section, we analyze the Small Wins dataset to identify the winning numbe
 """)
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Top 10 Winning Locations (Big Wins)]'
+    '<strong>Insight:</strong> Even though some numbers are more favourable this is clearly not enough evidence as we saw in the number trends section.'
     '</div><br> ', unsafe_allow_html=True)
 
 st.dataframe(small_win_stats.head(10))
@@ -160,7 +160,7 @@ In this section, we analyze the frequency distribution of digits in the winning 
 """)
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Top 10 Winning Locations (Big Wins)]'
+    '<strong>Insight:</strong> While digit frequency might fluctuate a little , it is not enought to establish a pattern , moreover a higher frequent number doesn\'t gaurantee a higher win amount.'
     '</div><br> ', unsafe_allow_html=True)
 
 st.dataframe(freq_small)

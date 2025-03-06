@@ -49,14 +49,14 @@ st.plotly_chart(fig_top10, use_container_width=True)
 
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Most Winning Places]'
+    '<strong>Insight:</strong> Ernakulam seems to be the most winning location but that could directly be related to the number of tickets sold in the particular place . Since that data is not public no research could be done for that.'
     '</div>', unsafe_allow_html=True)
 
 st.write("### Complete List of Locations and Their Win Counts")
 st.dataframe(win_counts,width=500)
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Most Winning Places]'
+    '<strong>Insight:</strong> While this might show a clear bias to some locations according to my research these seem to be the areas where the most lotteries are sold and hence the wins are directly proportional to it.'
     '</div>', unsafe_allow_html=True)
 ########################################
 # Least Winning Locations
@@ -68,7 +68,7 @@ st.write(
 
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Least Winning Places]'
+    '<strong>Insight:</strong> Again the analysis might be strongly correlated to the number of ticket sales in each area.'
     '</div>', unsafe_allow_html=True)
 # Group data by Place to compute win count and max win amount for each location
 least_wins = bigwins_df.groupby("Place").agg({
@@ -104,10 +104,7 @@ st.write("## 3. Dynamic Results for a Specific Place")
 st.write(
     "Enter a location to see its total wins and the frequency distribution of each digit (0-9) for each of the 6-digit winning numbers from the big wins dataset. By default, data for Ernakulam is shown."
 )
-st.markdown(
-    '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
-    '</div>', unsafe_allow_html=True)
+
 # Text input for place with default value "Ernakulam"
 place_input = st.text_input("Enter a Place (e.g., THRISSUR):", value="Ernakulam")
 
@@ -134,14 +131,14 @@ for num in filtered["WinningNumber"]:
 st.write("#### Digit Frequency Distribution Table for Each Position (Big Wins)")
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '<strong>Insight:</strong> Regardless of the area the digit distribution remain the same more or less.'
     '</div>', unsafe_allow_html=True)
 st.dataframe(digit_freq)
 
 st.subheader("Digit Frequency Distribution Bar Charts by Position")
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '<strong>Insight:</strong> While some digits might look favourable to certain places the cases is does not hold when forward tested.'
     '</div>', unsafe_allow_html=True)
 # Create subplots for all 6 positions using Plotly
 fig_subplots = make_subplots(rows=2, cols=3, subplot_titles=digit_freq.columns)
@@ -171,7 +168,7 @@ st.write(
 )
 st.markdown(
     '<div style="background-color: #c9fac5; padding: 10px; border-radius: 5px;">'
-    '<strong>Insight:</strong> [Write your insight here for Most Likely 6-Digit Combinations]'
+    '<strong>Insight:</strong>These most probable six digit combination only indicate one win which is not significant given the size of the dataset.'
     '</div>', unsafe_allow_html=True)
 # For each position, get the top 2 digits by frequency and display them.
 likely_digits = []

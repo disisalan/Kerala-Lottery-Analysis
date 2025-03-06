@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import itertools
 
-st.title("Amount Based Analysis")
+st.title("Prize Based Analysis")
 st.markdown("""
 In this section, we analyze the prize amounts across the lottery data. We examine the distribution of winning amounts, identify trends in prize values, and compare these amounts across different schemes and time frames. This analysis helps to uncover insights about the monetary scale of wins and any anomalies in the prize distributions.
 """)
@@ -23,7 +23,6 @@ if selected_amount <= 5000:
     st.write(f"## Small Wins Analysis for Amount: {selected_amount}")
     # Filter the small wins data by the selected amount
     df = smallwins_df[smallwins_df["Amount"] == selected_amount].copy()
-    
     if df.empty:
         st.write("No data available for this amount in Small Wins.")
     else:

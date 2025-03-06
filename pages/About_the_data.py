@@ -5,7 +5,7 @@ st.title("About the Data")
 
 st.subheader("Data Source")
 st.markdown("""
-The lottery results are drawn daily at **3:00 PM** and published on the official government website shortly after the draw. The website organizes each lottery scheme into two sections: **Old** and **New**. For this analysis, data was collected from the **New** section for results between **March 2021** and **August 2023**.
+The lottery results are drawn daily at **3:00 PM** and published on the official government website shortly after the draw. The website organizes each lottery scheme into two sections: **Old** and **New**. For this analysis, data was collected from the **New** section for results between **August 2020** and **January 2025**.
 
 Since the results were available only in PDF format, over **1000 PDFs** were scraped to compile a comprehensive dataset of more than **400,000 records**, with each record representing an individual win.
 """, unsafe_allow_html=True)
@@ -13,6 +13,13 @@ Since the results were available only in PDF format, over **1000 PDFs** were scr
 st.write('''**The scripts used for scrapping the sites and pdfs have been published on the Github Repo of this project and are free to use. Given you can understand it lol !!!** \n
 All the generated data set for each scheme , combined data sets and the original pdfs used are all avilable on both the Github Repo and Kaggle.
 ''')
+url="https://www.kaggle.com/datasets/alanksijo/kerala-lottery-result"
+st.markdown("#### [Check out the dataset on Kaggle](%s)" % url)
+
+url1="https://github.com/disisalan/Kerala-Lottery-Analysis"
+st.markdown("#### [Check out the Repository on Github](%s)" % url1)
+
+
 
 st.subheader("Data Cleaning and Mining")
 st.write("After downloading the pdfs each pdf was then read to extract information like draw date , Series , Scheme , Each price and all its wins .Since it was easier to go scheme by scheme first all the Individual Scheme dataset were made and then combined to make the final dataset referred to as **Big Wins** and **Small Wins**.")

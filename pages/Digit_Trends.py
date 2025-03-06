@@ -25,7 +25,7 @@ Identify the most frequently drawn 7-digit numbers by analyzing **all rows** fro
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> Even though the frequency of the most repeated number is 3, it is astonishing that even the big wins can have repeated numbers.'
     '</div>', unsafe_allow_html=True)
 st.write("#### For Big Wins ")
 
@@ -57,7 +57,7 @@ Identify the most frequently drawn 4-digit numbers by analyzing **all rows** fro
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> Clearly some numbers are more frequent than other but the difference is small and irrelevant to the position of digits.'
     '</div>', unsafe_allow_html=True)
 # Ensure the winning number is a 4-digit string by zero-padding the 'Number' column if necessary.
 # Ensure the winning number is a 4-digit string
@@ -118,7 +118,7 @@ fig = px.pie(
 st.plotly_chart(fig)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> Even the top 50 repeated numbers for the small win make up only very insignificant part of the all winning numbers giving them no real edge. '
     '</div>', unsafe_allow_html=True)
 
 # st.plotly_chart(fig_small)
@@ -131,7 +131,7 @@ Analyze which lottery series (e.g., AA, AB, etc.) appear most frequently in the 
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> There is no clear series that wins more than the other buy a great margin but the top two winning serial belong to the Nirmal Lottery.'
     '</div>', unsafe_allow_html=True)
 
 # Calculate the frequency of each serial
@@ -184,7 +184,7 @@ Determine which 7-digit and 4-digit numbers have been drawn the least or have ne
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> It was found that in small wins there is no number that has never been drawn indicating a fair chance to each number.<br> For big wins considering the sample space for a six digit number is very big it was irrelevant to find undrawn numbers.'
     '</div>', unsafe_allow_html=True)
 
 
@@ -218,7 +218,7 @@ fig_big_pie = px.pie(
 st.plotly_chart(fig_big_pie)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> For big wins the ratio of repeating and non repeating numbers might look concering having an imbalance but this is easily justifiable looking at the much less number of draws compared to small wins.'
     '</div>', unsafe_allow_html=True)
 # ✅ Breakdown of repeating digits in Big Wins
 big_repeat_groups = (
@@ -249,7 +249,10 @@ with col1:
 with col2:
     st.write("**Top 10 Winning Numbers with 5 Repeating Digits:**")
     st.dataframe(big_group[big_group["max_repeat"] == 5].nlargest(10, "Highest_Amount"))
-
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> It is intresting to see that many of the big wins has 4 ,5 repeating digits but not six which clearly aligns with the mathematical probablity of getting 6 repeating digits.  '
+    '</div>', unsafe_allow_html=True)
 
 # -----------------------------------------------
 # ✅ Small Wins Analysis
@@ -270,10 +273,6 @@ fig_small_pie = px.pie(
 )
 st.plotly_chart(fig_small_pie)
 
-st.markdown(
-    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
-    '</div>', unsafe_allow_html=True)
 
 
 # ✅ Breakdown of repeating digits in Small Wins
@@ -289,6 +288,10 @@ small_repeat_groups["Proportion (%)"] = (small_repeat_groups["Count"] / small_re
 
 st.write("**Small Wins: Repeating Digits Breakdown**")
 st.dataframe(small_repeat_groups)
+st.markdown(
+    '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
+    '<strong>Insight:</strong> As noted before there is not a significant difference between repeating and non repeating digits in the small wins considering the range is much smaller compared to big wins. But the data does indicate that non repeating numbers do have a slight edge over repeating numbers.'
+    '</div>', unsafe_allow_html=True)
 
 ##################################################################################################
 
@@ -299,7 +302,7 @@ Examine the frequency of individual digits at each position in the 7-digit numbe
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> The digit position frequency is also quite normal with only minor deviations for some places but when matched with the data these deviation do not give a solid edge to those repeating digits.(Mentioned below)'
     '</div>', unsafe_allow_html=True)
 
 ### Big Wins Analysis
@@ -355,7 +358,7 @@ Examine the frequency of individual digits at each position in the 4-digit numbe
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> Coming to small wins the distribution is much more stable and noraml. Doesn\'t indicate a clear advatange to any number at any position. Even though the number 7029 seems favourable it was not even in the top 50 drawn numbers.'
     '</div>', unsafe_allow_html=True)
 
 cols_small = st.columns(4)
@@ -406,7 +409,7 @@ Check if winning numbers are grouped within specific ranges (e.g., 1000000-20000
 """)
 st.markdown(
     '<div style="background-color:#c9fac5; padding:10px; border-radius:5px;">'
-    '<strong>Insight:</strong> [Write your insight here]'
+    '<strong>Insight:</strong> The range distribution of big wins and small wins do not indicate a significant range that is more probable.'
     '</div>', unsafe_allow_html=True)
 df_big["Date"] = pd.to_datetime(df_big["Date"], format="%d/%m/%Y")
 
