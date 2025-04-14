@@ -7,7 +7,7 @@ This project dives deep into Kerala lottery data, analyzing thousands of past re
 
 
 
-🔗 **Check out the live app here:** [Kerala Lottery Data Explorer](https://keralalotteryresult.streamlit.app/)
+🔗 **Check out the live app here:** [Kerala Lottery Result Analysis](https://keralalotteryresult.streamlit.app/)
 
 
 ---
