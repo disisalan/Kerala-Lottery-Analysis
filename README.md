@@ -43,29 +43,20 @@ This project offers a deep-dive analysis into Kerala State Lottery results using
 
 ## 🧪 Tech Stack
 
-
-
 ### 🔧 Core Technologies
 
-- **`Python`** – The backbone of the project, used for data scraping, cleaning, analysis, and building the web app.
-- **`Streamlit`** – A lightweight Python framework to build the interactive web interface for visualizing trends and insights.
+- **`Python`** **`Streamlit`** 
 
 ---
 
-
 #### 📊 Data Handling & Analysis
-- **`pandas`** – For data manipulation and working with large datasets efficiently.
-- **`numpy`** – Provides support for high-performance mathematical computations.
-- **`pyarrow`** – Used for handling columnar data formats and efficient I/O operations.
+- **`pandas`** **`numpy`** **`pyarrow`** 
 
 #### 📈 Data Visualization
-- **`matplotlib`**, **`seaborn`** – For creating static plots and exploratory visualizations.
-- **`plotly`** – Enables dynamic, interactive charts embedded in the dashboard.
-- **`altair`** – A declarative visualization library ideal for quick statistical graphics.
-- **`pydeck`** – Used for **geospatial visualizations**, especially useful when plotting the **locations** of winning tickets.
+- **`matplotlib`**, **`seaborn`** **`plotly`** **`altair`**  **`pydeck`** 
 
 #### 📑 PDF Processing
-- **`pypdf`** – Parses over 1000+ PDFs to extract draw details, including **dates**, **series**, and **winning numbers**.
+- **`pypdf`**
 
 ---
 
