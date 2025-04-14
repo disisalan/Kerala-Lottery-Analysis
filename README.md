@@ -95,14 +95,14 @@ Here are some visuals from the project interface and analysis:
 
 | 📊 Dashboard | 📍 Location Trends |
 |--------------|--------------------|
-| ![](screenshots/1.png) | ![](screenshots/3.png) |
+| ![](Screenshots/1.png) | ![](Screenshots/3.png) |
 
 | 🔢 Digit Trends | 🕒 Time-Based Patterns |
 |----------------|------------------------|
-| ![](screenshots/2.png) | ![](screenshots/4.png) |
+| ![](Screenshots/2.png) | ![](Screenshots/4.png) |
 
 | 💰 Prize Distribution |
 |------------------------|
-| ![](screenshots/5.png) |
+| ![](Screenshots/5.png) |
 
 ---
